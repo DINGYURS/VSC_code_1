@@ -10185,7 +10185,7 @@ int main()
 	return 0;
 }
 */
-
+/*
 #include<iostream>// 神奇的四次方数https://www.luogu.com.cn/problem/P1679
 
 using namespace std;
@@ -10215,3 +10215,11 @@ int main()
 
     return 0;
 }
+*/
+
+
+
+
+
+
+
