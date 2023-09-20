@@ -4107,9 +4107,9 @@ int n, r, ans;  //r个数进行全排列  ans为排列个数
 int book[10]; //标记是否被访问
 int a[10]; //记录每次的排列数据
 
-void DFS(int cur){ //从{1,2,...,n}中取r个数构成的排列
-	if(cur == r){ //已经去够r个数 
-		for(int i = 0; i < cur; i++){ //循环输出 
+void DFS(int left){ //从{1,2,...,n}中取r个数构成的排列
+	if(left == r){ //已经去够r个数 
+		for(int i = 0; i < left; i++){ //循环输出 
 			cout << a[i] << ' ';
 		}
 		cout << endl;
@@ -4120,8 +4120,8 @@ void DFS(int cur){ //从{1,2,...,n}中取r个数构成的排列
 	for(int i = 0; i <n; i++){  //循环遍历保证不漏 
 		if(!book[i]){ //若没访问过 
 			book[i] = 1; //标记已访问
-			a[cur] = i+1; //i符合条件加入
-			DFS(cur + 1); //寻找一个数字 
+			a[left] = i+1; //i符合条件加入
+			DFS(left + 1); //寻找一个数字 
 			book[i] = 0; //回溯：清除标记
 		}
 	} 
@@ -10216,6 +10216,249 @@ int main()
     return 0;
 }
 */
+/*
+#include<iostream>
+#include<string>
+using namespace std;
+int a[200];
+
+int main()
+{
+    string str;
+    cin >> str;
+    for(int i=0;i<str.length();i++)
+    {
+        a[(int)str[i]]++;
+    }
+    for(int j=0;j<200;j++)
+    {
+        if(a[j])
+        {
+            cout << (char)j << " = " << a[j] << "\n"; 
+        }
+    }
+}
+*/
+/*
+#include<iostream>
+#include<math.h>
+#include<algorithm>
+using namespace std;
+
+int n;// 总人数
+int aim;// 目标人数
+struct people
+{
+    int number;// 报名号
+    int score;// 分数
+} a[10000];
+bool cmp(people a, people b)
+{
+    if(a.score!=b.score)
+        return a.score>b.score;
+    else
+        return a.number<b.number;
+}
+int main()
+{
+    cin >> n >> aim;
+    aim *= 1.5;
+    cout << aim;
+    for(int i=0;i<n;i++)
+    {
+        cin >> a[i].number >> a[i].score;
+    }
+    sort(a,a+n,cmp);
+    int j=0;// 拥有面试资格人数
+    while(a[j].score>=a[aim-1].score)
+    {
+        // cout << a[j].number << " " << a[j].score << "\n";
+        j++;
+    }
+    cout << a[aim].score << " " << j << " ";
+    j=0;
+    while(a[j].score>=a[aim-1].score)
+    {
+        cout << a[j].number << " " << a[j].score << "\n";
+        j++;
+    }
+}
+*/
+
+/*
+#include<iostream>
+#include<string>
+#include<algorithm>
+using namespace std;
+struct Student
+{
+    string name;
+    int qm;
+    int bj;
+    char gb;
+    char xb;
+    int number;
+    int total;
+};
+bool cmp_total(Student x,Student y){
+    if(x.total!=y.total)
+    return x.total>y.total;
+    else return x.name<y.name;
+}
+int main()
+{
+    int n;
+    int all;
+    cin>>n;
+    Student stu[n];
+
+    for(int a=0;a<n;a++)
+    {
+        cin>>stu[a].name>>stu[a].qm>>stu[a].bj>>stu[a].gb>>stu[a].xb>>stu[a].number;
+        stu[a].total = 0;
+        
+        if(stu[a].qm>80&&stu[a].number>=1) 
+            stu[a].total+=8000;
+        if(stu[a].qm>85&&stu[a].bj>80)
+            stu[a].total+=4000;
+        if(stu[a].qm>90) 
+            stu[a].total+=2000;
+        if(stu[a].qm>85&&stu[a].xb=='Y') 
+            stu[a].total+=1000;
+        if(stu[a].bj>80&&stu[a].gb=='Y') 
+            stu[a].total+=850;}
+    sort(stu,stu+n,cmp_total);
+    int i=0;
+    while(i!=n)
+    {
+        all=stu[i].total+all;
+        i++;
+    }
+    cout<<stu[0].name<<endl<<stu[0].total<<endl<<all;
+    return 0;
+}
+*/
+
+/*
+#include<iostream>// https://pintia.cn/problem-sets/1703586011931852800/exam/problems/1703589908104720399?type=7&page=0
+using namespace std;
+
+int a[300];
+int n;
+int aim;
+int pta;
+int total;
+
+int main()
+{
+	cin >> n >> aim >> pta;
+	while(n--)
+	{
+		int s1;
+        int s2;
+		cin >> s1 >> s2;
+		if(s1>=175)
+		{
+			if(s2 >= pta)
+                total += 1;        
+			else if(a[s1] < aim)
+			{
+				a[s1]++;
+				total += 1; 
+			}
+		}
+	}
+	cout << total;
+	return 0;
+}
+*/
+
+/*
+#include<iostream>// https://pintia.cn/problem-sets/1703586011931852800/exam/problems/1703589908104720400?type=7&page=0
+using namespace std;
+
+int n;
+int num;
+int a[31];
+
+void dfs(int left, int right)
+{
+	int i;
+	if(left > n) return;		//剪枝1 
+	if(right > n) return;		//剪枝2 
+	if(right == n)
+	{
+		num++;
+        cout << n << "=";
+		for(i = 0;i < left;i++)
+		{
+			if(i == 0)
+                cout << a[0];
+			else 
+                cout << "+" << a[i];
+		}
+		if(num%4 == 0)
+            cout << "\n";
+		else 
+            cout << ";";
+	}
+	else
+	{
+		if(left == 0)
+		{
+			for(i = 1;i <= n/2;i++)		//去重1 
+			{
+				a[left] = i;
+				dfs(left+1, right+i);
+				a[left] = 0;
+			}
+		}
+		else
+		{
+			for(i = a[left-1];i <= n-a[left-1];i++)	//去重2
+			{
+				a[left] = i;
+				dfs(left+1, right+i);
+				a[left] = 0;
+			}
+		}
+	}
+}
+int main()
+{
+	cin >> n;
+	dfs(0,0);
+    cout << n << "=" << n;
+	return 0;
+} 
+*/
+
+#include <iostream>
+using namespace std;
+int a[100001];
+int b[100001];
+int main()
+{
+	int n;
+	cin >> n;
+	for(int i=0;i<n;i++)
+		cin >> a[i];
+	for(int i=0;i<n;i++)
+		cin >> b[i];
+	while(j+k < n-1){
+		if(a[j] >= b[k])
+			k++;
+		else
+			j++;
+	}
+	cout << a[j]>b[k]?b[k]:a[j];
+	return 0;
+}
+
+
+
+
+
 
 
 
